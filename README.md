@@ -148,6 +148,20 @@ private Environment env;
     }
 ```
 
+> Verifique que tenga los siguientes imports
+
+```
+import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.model.rest.RestBindingMode;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
+
+import co.com.redhat.integration.dto.RequestSaveEmployees;
+import co.com.redhat.integration.dto.ResponseSaveEmployees;
+```
+
 > Cree la clase SaveEmployeesRoute en el paquete co.com.redhat.integration.routes
 
 > Extienda la clase de org.apache.camel.builder.RouteBuilder y anotela con @Component
@@ -213,6 +227,24 @@ private JacksonDataFormat jsonDataFormat = new JacksonDataFormat(RequestSaveEmpl
     }
 ```
 
+> Verifique que tenga los siguientes imports
+
+```
+import org.apache.camel.CamelContext;
+import org.apache.camel.Exchange;
+import org.apache.camel.LoggingLevel;
+import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.bean.validator.BeanValidationException;
+import org.apache.camel.component.jackson.JacksonDataFormat;
+import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.CannotGetJdbcConnectionException;
+import org.springframework.stereotype.Component;
+
+import co.com.redhat.integration.beans.ResponseHandler;
+import co.com.redhat.integration.dto.RequestSaveEmployees;
+```
+
 > Cree la clase HealthRoute en el paquete co.com.redhat.integration.routes
 
 > Extienda la clase de org.apache.camel.builder.RouteBuilder y anotela con @Component
@@ -250,6 +282,16 @@ private CamelContext camelContext;
 	}
 ```
 
+> Verifique que tenga los siguientes imports
+
+```
+import org.apache.camel.CamelContext;
+import org.apache.camel.LoggingLevel;
+import org.apache.camel.builder.RouteBuilder;
+import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+```
 
 ## Test unitarios
 
