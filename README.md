@@ -331,7 +331,7 @@ private Logger log = LoggerFactory.getLogger(ApplicationTest.class);
 
 ```
 	@Test
-	public void testConsultaEmpleados() throws Exception {
+	public void testSaveEmployees() throws Exception {
 		//Se arma el request
 		RequestSaveEmployees request = new RequestSaveEmployees();
 		request.setNombre("SER71894");
@@ -341,7 +341,7 @@ private Logger log = LoggerFactory.getLogger(ApplicationTest.class);
 		ResponseEntity<ResponseSaveEmployees> response = restTemplate.postForEntity(
 				"http://localhost:8080/api/employees/save-employees", request, ResponseSaveEmployees.class);
 		//Log de la respuesta
-		log.info("testConsultaEmpleados response {}", response);
+		log.info("testSaveEmployees response {}", response);
 		//Verificación de la respuesta que debe ser codigo 200
 		assertThat(response.getBody().getCodigo().equals("200")).isTrue();
 	}
@@ -349,7 +349,7 @@ private Logger log = LoggerFactory.getLogger(ApplicationTest.class);
 
 ```
 	@Test
-	public void testValidarCampos() throws Exception {
+	public void testValidateRequest() throws Exception {
 		//Se arma el request
 		RequestSaveEmployees request = new RequestSaveEmployees();
 		request.setNombre("");
@@ -359,7 +359,7 @@ private Logger log = LoggerFactory.getLogger(ApplicationTest.class);
 		ResponseEntity<ResponseSaveEmployees> response = restTemplate.postForEntity(
 				"http://localhost:8080/api/employees/save-employees", request, ResponseSaveEmployees.class);
 		//Log de la respuesta
-		log.info("testValidarCampos response {}", response);
+		log.info("testValidateRequest response {}", response);
 		//Verificación de la respuesta que debe ser codigo 400
 		assertThat(response.getBody().getCodigo().equals("400")).isTrue();
 	}
