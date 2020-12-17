@@ -1,7 +1,7 @@
 # redhat-integration-db-lab
 
 ## Descripción
-Ruta camel que inserta un registro de un empleado en una base de datos H2 embebida.
+Ruta camel que inserta un registro de un empleado en una base de datos H2 embebida, esta ruta se ejecuta sobre Spring Boot.
 
 
 ## URL
@@ -33,13 +33,16 @@ http://localhost:8080/api/employees/save-employees
 
 ## Pasos para implementar la ruta
 
-A continuación se describen los pasos para realizar implementación de la ruta y ejecución local, una vez se haya clonado este repositorio
+A continuación se describen los pasos para realizar implementación de la ruta y su ejecución local, una vez se haya clonado este repositorio
 
-> importar el proyecto en el IDE de su preferencia, preferible en Red Hat Code Ready Studio
+> Importe el proyecto en el IDE de su preferencia, preferible en Red Hat Code Ready Studio 
+[Download Red Hat Code Ready Studio](https://developers.redhat.com/products/codeready-studio/download)
 
-> Crear la clase RequestSaveEmployees en el paquete co.com.redhat.integration.dto
+### Crear los DTOs de request y response
 
-> Incluir las siguientes anotaciones a nivel de la clase
+> Cree la clase RequestSaveEmployees en el paquete co.com.redhat.integration.dto
+
+> Incluya las siguientes anotaciones a nivel de la clase
 
 ```
 @JsonAutoDetect
@@ -47,7 +50,7 @@ A continuación se describen los pasos para realizar implementación de la ruta 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 ```
 
-> Crear los atributos nombre, cedula y salario como se muestra a continuación.
+> Cree los atributos nombre, cedula y salario como se muestra a continuación.
 
 ```
 @JsonProperty
@@ -68,9 +71,9 @@ private int salario;
 
 > Cree los getters y setters de los tres (3) atributos
 
-> Crear la clase ResponseSaveEmployees en el paquete co.com.redhat.integration.dto
+> Cree la clase ResponseSaveEmployees en el paquete co.com.redhat.integration.dto
 
-> Incluir las siguientes anotaciones a nivel de la clase
+> Incluya las siguientes anotaciones a nivel de la clase
 
 ```
 @JsonAutoDetect
@@ -79,7 +82,7 @@ private int salario;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 ```
 
-> Crear los atributos codigo y descripción como se muestra a continuación.
+> Cree los atributos codigo y descripción como se muestra a continuación.
 
 ```
 @JsonProperty
@@ -96,6 +99,7 @@ private String descripcion;
 
 > Cree los getters y setters de los dos (2) atributos
 
+### Cree las rutas de integración
 
 > Cree la clase RestConfigurationRoute en el paquete co.com.redhat.integration.routes
 
@@ -106,14 +110,14 @@ private String descripcion;
 public class RestConfigurationRoute extends RouteBuilder {
 ```
 
-> Inyecte las propiedades
+> Inyecte el atributo que permite acceder a las propiedades del archivo application.properties o el configmap en caso de ser desplegado en OCP
 
 ```
 @Autowired
 private Environment env;
 ```
 
-> Cree el siguiente método
+> Cree el siguiente método, el cual contiene la exposición de los endpoint rest
 
 ```
 	@Override
@@ -162,6 +166,8 @@ import co.com.redhat.integration.dto.RequestSaveEmployees;
 import co.com.redhat.integration.dto.ResponseSaveEmployees;
 ```
 
+> Verifique el código fuente y estudielo hasta comprenderlo
+
 > Cree la clase SaveEmployeesRoute en el paquete co.com.redhat.integration.routes
 
 > Extienda la clase de org.apache.camel.builder.RouteBuilder y anotela con @Component
@@ -183,7 +189,7 @@ private CamelContext camelContext;
 private JacksonDataFormat jsonDataFormat = new JacksonDataFormat(RequestSaveEmployees.class);
 ```
 
-> Cree el siguiente método
+> Cree el siguiente método, el cual implementa la lógica que inserta en la base de datos
 
 ```
 	@Override
@@ -245,6 +251,8 @@ import co.com.redhat.integration.beans.ResponseHandler;
 import co.com.redhat.integration.dto.RequestSaveEmployees;
 ```
 
+> Verifique el código fuente y estudielo hasta comprenderlo
+
 > Cree la clase HealthRoute en el paquete co.com.redhat.integration.routes
 
 > Extienda la clase de org.apache.camel.builder.RouteBuilder y anotela con @Component
@@ -264,7 +272,7 @@ private Logger logger;
 private CamelContext camelContext;
 ```
 
-> Cree el siguiente método
+> Cree el siguiente método, el cual tiene la lógica de responder el health check
 
 ```
 	@Override
@@ -293,11 +301,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 ```
 
-## Test unitarios
+> Verifique el código fuente y estudielo hasta comprenderlo
+
+## Cree los Test unitarios
 
 > Cree la clase ApplicationTest en el paquete co.com.redhat.integration del source de test
 
-> Anotela con las siguientes anotaciones.
+> Anote la clase con las siguientes anotaciones.
 
 ```
 @RunWith(SpringRunner.class)
@@ -317,7 +327,7 @@ private TestRestTemplate restTemplate;
 private Logger log = LoggerFactory.getLogger(ApplicationTest.class);
 ```
 
-> Cree los siguientes métodos
+> Cree los siguientes métodos, los cuales tienen los escenarios de los test unitarios
 
 ```
 	@Test
@@ -373,6 +383,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 ```
 
+> Verifique el código fuente y estudielo hasta comprenderlo
+
 ## Compilar
 
 > Compile el proyecto y genere el artefacto con el siguiente comando ubicandose dentro de la carpeta save-employees
@@ -385,9 +397,11 @@ cd save-employees
 mvn clean install -DskipTests=true
 ```
 
+> Verifique que la ejecución de maven se ejecute correctamente (Build Success)
+
 ## Ejecutar pruebas unitarias
 
-> Ejecute las pruebas unitarias
+> Ejecute las pruebas unitarias con el siguiente comando
 
 ```
 mvn clean test
@@ -397,7 +411,7 @@ mvn clean test
 
 ## Iniciar la aplicación
 
-> Inicie la aplicación
+> Inicie la aplicación con el siguiente comando
 
 ```
 mvn clean package -DskipTests=true spring-boot:run
@@ -405,7 +419,7 @@ mvn clean package -DskipTests=true spring-boot:run
 
 ## Consumir el servicio
 
-> Consuma el servicio con su aplicación de preferencia o ejecute el siguiente comando
+> Consuma el servicio con su aplicación de preferencia (postman, soapui, etc) o ejecute el siguiente comando
 
 ```
 curl --location --request POST 'http://localhost:8080/api/employees/save-employees' \
@@ -417,9 +431,18 @@ curl --location --request POST 'http://localhost:8080/api/employees/save-employe
 }'
 ```
 
+> Verifique que reciba la siguiente respuesta
+
+```JSON
+{
+    "codigo": "200",
+    "descripcion": "Ok"
+}
+```
+
 ## Verificar la inserción
 
-> Verifique que se haya insertado la información entrando a la siguiente URL sin bajar la aplicación
+> Verifique que se haya insertado la información entrando a la siguiente URL, tenga en cuenta que no se debe bajar la aplicación
 
 ```
 http://localhost:8080/h2-console/
@@ -430,6 +453,19 @@ http://localhost:8080/h2-console/
 ```
 select * from empleados;
 ```
+
+> Verifique que la información enviada en el request se haya guardado en la base de datos H2
+
+> Pruebe consumiendo el servicio con otra información y verifique nuevamente que se inserte
+
+## Expanda la funcionalidad
+
+> Después de estudiar y entender el código fuente, agregue un nuevo endpoint que realice la consulta a la base de datos y muestre la información de un empleado dado su número de cédula, el endpoint debe ser GET - /api/employees/employee/{id}
+
+> Agregue un test unitario que pruebe el nuevo endpoint
+
+> Verifique que las nuevas pruebas unitarias funcionen y que al iniciar la aplicación la consulta sea exitosa.
+
 
 ## Author
 
