@@ -469,4 +469,4 @@ select * from empleados;
 
 ## Author
 
-* **Lázaro Miguel Coronado Torres** - *Middleware Senior Consultant - lcoronad@redhat.com* 
+* **Lázaro Miguel Coronado Torres** - *Architect - lcoronad@redhat.com* 
