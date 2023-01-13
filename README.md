@@ -470,3 +470,7 @@ select * from empleados;
 ## Author
 
 * **Lázaro Miguel Coronado Torres** - *Architect - lcoronad@redhat.com* 
+
+
+http://localhost:8080/api/employees/health-check
+http://localhost:8080/api/api-doc
