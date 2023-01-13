@@ -343,7 +343,7 @@ private Logger log = LoggerFactory.getLogger(ApplicationTest.class);
 		//Log de la respuesta
 		log.info("testSaveEmployees response {}", response);
 		//Verificación de la respuesta que debe ser codigo 200
-		assertThat(response.getBody().getCodigo().equals("200")).isTrue();
+		assertThat(response.getBody().getCodigo()).isEqualTo("200");
 	}
 ```
 
@@ -361,7 +361,7 @@ private Logger log = LoggerFactory.getLogger(ApplicationTest.class);
 		//Log de la respuesta
 		log.info("testValidateRequest response {}", response);
 		//Verificación de la respuesta que debe ser codigo 400
-		assertThat(response.getBody().getCodigo().equals("400")).isTrue();
+		assertThat(response.getBody().getCodigo()).isEqualTo("400");
 	}
 ```
 
