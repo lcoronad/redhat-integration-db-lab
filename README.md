@@ -128,7 +128,10 @@ private Environment env;
 	        .bindingMode(RestBindingMode.json)
 	        .skipBindingOnErrorCode(false)
 	        .dataFormatProperty("prettyPrint", "true")
-	        .apiContextPath("api-doc");
+	        .apiContextPath("api-doc")
+                .apiProperty("api.title", "save-employees")
+                .apiProperty("api.path", "/save-employees")
+                .apiProperty("api.version", "1.0.0");
     	//Se expone el contexto del servicio rest
         rest(env.getProperty("service.rest.uri"))
             .description(env.getProperty("service.rest.description"))
