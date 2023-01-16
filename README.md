@@ -420,6 +420,94 @@ mvn clean test
 mvn clean package -DskipTests=true spring-boot:run
 ```
 
+## Consumir el Health Check
+
+> Consuma la siguiente URL para la verificación de que el health check responda correctamente
+
+```
+curl --location --request GET 'http://localhost:8080/api/employees/health-check'
+```
+
+> Verifique que reciba la siguiente respuesta
+
+```
+"OK"
+```
+
+## Consumir la documentación OpenAPI
+
+> Consuma la siguiente URL para obtener la documentación de OpenAPI
+
+```
+curl --location --request GET 'http://localhost:8080/api/api-doc'
+```
+
+> Verifique que reciba la siguiente respuesta
+
+```JSON
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "save-employees"
+  },
+  "host" : "0.0.0.0",
+  "tags" : [ {
+    "name" : "employees",
+    "description" : "\"Insertar empleados\""
+  } ],
+  "schemes" : [ "http" ],
+  "paths" : {
+    "/employees/health-check" : {
+      "get" : {
+        "tags" : [ "employees" ],
+        "summary" : "\"Health\"",
+        "operationId" : "route2",
+        "consumes" : [ "application/json;charset=UTF-8" ],
+        "produces" : [ "application/json;charset=UTF-8" ],
+        "responses" : {
+          "200" : { }
+        }
+      }
+    },
+    "/employees/save-employees" : {
+      "post" : {
+        "tags" : [ "employees" ],
+        "summary" : "\"Insertar empleados\"",
+        "operationId" : "route1",
+        "consumes" : [ "application/json;charset=UTF-8" ],
+        "produces" : [ "application/json;charset=UTF-8" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/RequestSaveEmployees"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "All users successfully created",
+            "schema" : {
+              "$ref" : "#/definitions/ResponseSaveEmployees"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "RequestSaveEmployees" : {
+      "type" : "object"
+    },
+    "ResponseSaveEmployees" : {
+      "type" : "object",
+      "description" : "Response DTO Object"
+    }
+  }
+}
+```
+
 ## Consumir el servicio
 
 > Consuma el servicio con su aplicación de preferencia (postman, soapui, etc) o ejecute el siguiente comando
@@ -428,7 +516,7 @@ mvn clean package -DskipTests=true spring-boot:run
 curl --location --request POST 'http://localhost:8080/api/employees/save-employees' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "nombre": "Nombre a insertar",
+    "nombre": "Cambia por tu nombre",
     "cedula": "5252522",
     "salario": "1222222"
 }'
@@ -473,7 +561,3 @@ select * from empleados;
 ## Author
 
 * **Lázaro Miguel Coronado Torres** - *Architect - lcoronad@redhat.com* 
-
-
-http://localhost:8080/api/employees/health-check
-http://localhost:8080/api/api-doc
