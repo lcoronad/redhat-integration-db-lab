@@ -508,6 +508,17 @@ curl --location --request GET 'http://localhost:8080/api/api-doc'
 }
 ```
 
+## Consumir Swagger UI
+
+> Consuma la siguiente URL desde un browser para verificar
+
+```
+http://localhost:8080/swagger-ui
+```
+
+> Verifique que se muestre correctamente la documentación en Swagger UI
+
+
 ## Consumir el servicio
 
 > Consuma el servicio con su aplicación de preferencia (postman, soapui, etc) o ejecute el siguiente comando
